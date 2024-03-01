@@ -1,0 +1,23 @@
+
+ ******SVAR PÅ FRÅGOR*****
+
+o Vilka testdesigntekniker har du använt?
+
+-     Jag har använt mig av BDD  för att strukturera mina testfall och scenarier i 'Rent a car.robot'
+      Jag har använt DDT genom att separera testdata från testlogiken. Genom att ha  användardata i separat resource fil.
+      Jag har avänt ATDD i mitt BDD test fall eftersom jag först skrev användarscenarier och acceptanskriterier med hjälp av Gherkin syntax innan skrev själva koden.
+
+o Hittade du några avvikelser från kraven?
+
+-     Ja, att det enda sättet att navigera till bokning sidan är att följa det vanliga navigation flödet.
+
+o Vilka av dina testfall bedömer du gav störst vinst i att automatisera?
+
+-     Att fylla i formulärfält, klicka på knappar och verifiera textmeddelanden. Ex inloggning och create user. Även att boka för att det sparar tid och pengar.
+
+o Vad var svårast med labben och varför?
+
+-     En av de svåraste delarna med labben var att hantera och verifiera olika felmeddelande. Och när man fastnar och inte vet vad man göra
+
+
+ *****Artur Sandelin*****
