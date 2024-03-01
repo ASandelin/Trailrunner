@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trailrunner</a> &gt; <a href="index.source.html" class="el_package">se.iths</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package se.iths;
+
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class User {
+    private double length_cm;
+    private double weight_kg;
+    private Map&lt;String, Lap&gt; runList; // För att spara löprundorna
+
+    // Konstruktor
+<span class="fc" id="L13">    public User(double length_cm, double weight_kg) {</span>
+<span class="fc" id="L14">        this.length_cm = length_cm;</span>
+<span class="fc" id="L15">        this.weight_kg = weight_kg;</span>
+<span class="fc" id="L16">        this.runList = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L17">    }</span>
+    // Getters och setters
+    public double getLength() {
+<span class="fc" id="L20">        return length_cm;</span>
+    }    
+    public void setLength(double length) {
+<span class="fc" id="L23">        this.length_cm = length;</span>
+<span class="fc" id="L24">    }</span>
+    public void setWeight(double weight) {
+<span class="fc" id="L26">        this.weight_kg = weight;</span>
+<span class="fc" id="L27">    }</span>
+    public double getWeight() {
+<span class="fc" id="L29">        return weight_kg;</span>
+    }
+    public void setRunList(Map&lt;String, Lap&gt; runList) {
+<span class="fc" id="L32">        this.runList = runList;</span>
+<span class="fc" id="L33">    }</span>
+    public Map&lt;String, Lap&gt; getRunList() {
+<span class="fc" id="L35">        return runList;</span>
+    }    
+    public Lap getRun(String id) {
+<span class="fc" id="L38">        return runList.get(id);</span>
+    }
+    // Beräkna BMI
+    public double calculateBMI() {
+<span class="fc" id="L42">        double height_m = length_cm / 100; // konvertera längd till meter</span>
+<span class="fc" id="L43">        return weight_kg / (height_m * height_m);</span>
+    }
+    // Total distans av löprundorna
+    public double totalDistance() {
+<span class="fc" id="L47">        double total = 0.0;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        for (Lap run : runList.values()) {</span>
+<span class="fc" id="L49">            total += run.getDistance_km();</span>
+<span class="fc" id="L50">        }</span>
+<span class="fc" id="L51">        return total;</span>
+    }
+    // Genomsnittlig distans av löprundorna
+    public double averageDistance() {
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (runList.isEmpty()) {</span>
+<span class="nc" id="L56">            return 0.0;</span>
+        }
+<span class="fc" id="L58">        return totalDistance() / runList.size();</span>
+    }
+    // Skriva ut detaljer om en Lap
+    public void printRunDetails(String id) {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (runList.containsKey(id)) {</span>
+<span class="fc" id="L63">            Lap run = runList.get(id);</span>
+<span class="fc" id="L64">            System.out.println(&quot;Run ID: &quot; + run.getId());</span>
+<span class="fc" id="L65">            System.out.println(&quot;Distance: &quot; + run.getDistance_km() + &quot; km&quot;);</span>
+<span class="fc" id="L66">            System.out.println(&quot;Time: &quot; + run.getFinish_time () );</span>
+<span class="fc" id="L67">            System.out.println(&quot;Date: &quot; + run.getDate());</span>
+<span class="fc" id="L68">            System.out.println(&quot;Average Speed: &quot; + run.calculateAverageSpeed() + &quot; km/h&quot;);</span>
+<span class="fc" id="L69">            System.out.println(&quot;Pace: &quot; + run.calculatePace() + &quot; min/km&quot;);</span>
+<span class="fc" id="L70">        } else {</span>
+<span class="nc" id="L71">            System.out.println(&quot;Run with ID &quot; + id + &quot; not found.&quot;);</span>
+        }
+<span class="fc" id="L73">    }</span>
+    // Ta bort en Lap
+    public void deleteRun(String id) {
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (runList.containsKey(id)) {</span>
+<span class="fc" id="L77">            runList.remove(id);</span>
+<span class="fc" id="L78">            System.out.println(&quot;Run with ID &quot; + id + &quot; deleted.&quot;);</span>
+        } else {
+<span class="nc" id="L80">            System.out.println(&quot;Run with ID &quot; + id + &quot; not found.&quot;);</span>
+        }
+<span class="fc" id="L82">    }</span>
+    // Sparar en Lap
+    public void saveRun(Lap run) {
+<span class="fc" id="L85">        runList.put(run.getId(), run);</span>
+<span class="fc" id="L86">        System.out.println(&quot;Run with ID &quot; + run.getId() + &quot; saved.&quot;);</span>
+<span class="fc" id="L87">    }</span>
+
+
+}  
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

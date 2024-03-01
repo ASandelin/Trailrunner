@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Lap.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trailrunner</a> &gt; <a href="index.source.html" class="el_package">se.iths</a> &gt; <span class="el_source">Lap.java</span></div><h1>Lap.java</h1><pre class="source lang-java linenums">package se.iths;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+public class Lap {
+    private String id;
+    private double distance_km;
+    private LocalTime finish_time;
+    private LocalDate date;
+
+    // Konstruktor
+<span class="fc" id="L15">    public Lap(String id, double distance_km, LocalTime finish_time, LocalDate date) {</span>
+<span class="fc" id="L16">        this.id = id;</span>
+<span class="fc" id="L17">        this.distance_km = distance_km;</span>
+<span class="fc" id="L18">        this.finish_time = finish_time;</span>
+<span class="fc" id="L19">        this.date = date;</span>
+<span class="fc" id="L20">    }</span>
+    // Getters och setters
+    public String getId() {
+<span class="fc" id="L23">        return id;</span>
+    }
+    public void setId(String id) {
+<span class="fc" id="L26">        this.id = id;</span>
+<span class="fc" id="L27">    }</span>
+    public double getDistance_km() {
+<span class="fc" id="L29">        return distance_km;</span>
+    }
+    public void setDistance_km(double distance_km) {
+<span class="fc" id="L32">        this.distance_km = distance_km;</span>
+<span class="fc" id="L33">    }</span>
+     public LocalTime getFinish_time () {
+<span class="fc" id="L35">        return finish_time; </span>
+    }
+    public void setFinish_time(LocalTime finishTime) {
+<span class="fc" id="L38">        this.finish_time = finishTime;</span>
+<span class="fc" id="L39">    }</span>
+    public LocalDate getDate() {
+<span class="fc" id="L41">        return date;</span>
+    }
+    public void setDate(LocalDate date) {
+<span class="fc" id="L44">        this.date = date;</span>
+<span class="fc" id="L45">    }</span>
+    // Beräkna medelhastighet i km/h
+    public double calculateAverageSpeed() {
+<span class="fc" id="L48">        Duration duration = Duration.between(LocalTime.MIN, finish_time);</span>
+<span class="fc" id="L49">        double timeInSeconds = duration.toSeconds();</span>
+<span class="fc" id="L50">        return (distance_km / timeInSeconds) * 3600; // km/h</span>
+    }
+    // Beräkna tempo (tid per kilometer) i minuter
+    public double calculatePace() {
+<span class="fc" id="L54">        Duration duration = Duration.between(LocalTime.MIN, finish_time);</span>
+<span class="fc" id="L55">        double timeInSeconds = duration.toSeconds();</span>
+<span class="fc" id="L56">        return (timeInSeconds / distance_km) / 60; // min/km</span>
+    }
+     @Override
+    public String toString() {
+<span class="nc" id="L60">        return &quot;Run ID: &quot; + id + &quot;\n&quot; +</span>
+               &quot;Distance: &quot; + distance_km + &quot; km\n&quot; +
+<span class="nc" id="L62">               &quot;Time: &quot; + finish_time.format(DateTimeFormatter.ofPattern(&quot;HH:mm:ss&quot;)) + &quot;\n&quot; +</span>
+               &quot;Date: &quot; + date + &quot;\n&quot; +
+<span class="nc" id="L64">               &quot;Average Speed: &quot; + calculateAverageSpeed() + &quot; km/h\n&quot; +</span>
+<span class="nc" id="L65">               &quot;Pace: &quot; + calculatePace() + &quot; min/km&quot;;</span>
+    } 
+} 
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
