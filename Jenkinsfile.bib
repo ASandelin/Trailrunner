@@ -5,7 +5,9 @@ pipeline {
         string(name: 'main', defaultValue: 'master', description: 'Main branch')
         string(name: 'b1', defaultValue: 'develop', description: 'Branch b1')
     }
-
+    triggers {
+        pollSCM('H * * * *') 
+    }
     stages {
         stage('Checkout') {
             steps {
