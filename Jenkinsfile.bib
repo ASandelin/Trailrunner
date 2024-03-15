@@ -33,7 +33,8 @@ pipeline {
         }
         stage('Post Test') {
             steps {
-            	echo 'Post Test stage executed'
+            	junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
+                jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
                 }
         }
         stage('Run Robot') {
