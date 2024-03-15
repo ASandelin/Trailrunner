@@ -23,18 +23,20 @@ pipeline {
                 }
             }
         }
-        stage('Post Test') {
-            steps {
-            	junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
-                jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
-                }
-        }
         stage('Run Robot') {
             steps {
                 dir('Selenium') {
                     bat 'robot InfotivCarRental\\infotivCarRental.robot'
                 }
-                }
+            }
+        }        
+        stage('Post Test') {
+            steps {
+            	junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
+                jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+                archiveArtifacts(artifacts: 'selenium/log/output.xml, selenium/log/*.html, selenium/log/report*.html', allowEmptyArchive: true)
+            }
         }
+
     }
 }
