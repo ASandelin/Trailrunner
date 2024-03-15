@@ -33,11 +33,13 @@ pipeline {
         }
         stage('Post Test') {
             steps {
-                            }
+            	echo 'Post Test stage executed'
+                }
         }
         stage('Run Robot') {
             steps {
-                            }
+                echo 'Run Robot stage executed'
+                }
         }
     }
 }
