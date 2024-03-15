@@ -31,7 +31,9 @@ pipeline {
         }
         stage('Run Robot') {
             steps {
-                echo 'Run Robot stage executed'
+                dir('Selenium') {
+                    bat 'robot InfotivCarRental\\infotivCarRental.robot'
+                }
                 }
         }
     }
