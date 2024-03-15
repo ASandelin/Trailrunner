@@ -34,7 +34,7 @@ pipeline {
             steps {
             	junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
                 jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
-                archiveArtifacts(artifacts: 'selenium/log/output.xml, selenium/log/*.html, selenium/log/report*.html', allowEmptyArchive: true)
+                archiveArtifacts(artifacts: 'selenium/log/output.xml, selenium/log/*.html', allowEmptyArchive: true)
             }
         }
 
