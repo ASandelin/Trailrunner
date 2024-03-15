@@ -37,7 +37,7 @@ pipeline {
                 	   jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
                 	}
                 dir('Selenium') {
-                   archiveArtifacts(artifacts: 'log/output.xml, log/log.html, log/report.html', allowEmptyArchive: true)            
+                   archiveArtifacts(artifacts: '**/output.xml, **/log.html, **/report.html', allowEmptyArchive: true)            
                 }
         	 }
         }
