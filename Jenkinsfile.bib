@@ -39,7 +39,7 @@ pipeline {
                 dir('Selenium') {
                    archiveArtifacts(artifacts: 'log/output.xml, log/log.html, log/report.html', allowEmptyArchive: true)            
                 }
+        	 }
         }
-
     }
 }
