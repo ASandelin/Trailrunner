@@ -12,17 +12,21 @@ pipeline {
         stage('Checkout') {
             steps {
             	script {
-            		// Checkout the branch specified by the 'b1' parameter
+            		// Checkout the branch specified by the 'b1' parameter																																																																																																																																	
             		checkout([$class: 'GitSCM', branches: [[name: params.b1]], userRemoteConfigs: [[url: 'https://github.com/ASandelin/Trailrunner.git']]])
                        }
                   }
         }
         stage('Build') {
             steps {
-                            }
-        }
+                dir('Trailrunner') {
+                    bat 'mvn compile'
+                }
+            }
+        }        
         stage('Test') {
             steps {
+                bat 'mvn test'
                             }
         }
         stage('Post Test') {
