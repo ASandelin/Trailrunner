@@ -32,9 +32,13 @@ pipeline {
         }        
         stage('Post Test') {
             steps {
-            	junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
-                jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
-                archiveArtifacts(artifacts: 'Selenium/output.xml, Selenium/log.html, Selenium/report.html', allowEmptyArchive: true)            }
+            	dir('Trailrunner') {
+            	   junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
+                	   jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+                	}
+                dir('Selenium') {
+                   archiveArtifacts(artifacts: 'log/output.xml, log/log.html, log/report.html', allowEmptyArchive: true)            
+                }
         }
 
     }
