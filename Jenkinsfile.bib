@@ -11,14 +11,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dir('Trailrunner') {
+                dir('trailrunner') {
                     bat 'mvn compile'
                 }
             }
         }        
         stage('Test') {
             steps {
-                dir('Trailrunner') {
+                dir('trailrunner') {
                     bat 'mvn test'
                 }
             }
@@ -32,14 +32,24 @@ pipeline {
         }        
         stage('Post Test') {
             steps {
-            	dir('Trailrunner') {
+            	dir('trailrunner') {
             	   junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
                 	   jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
                 	}
                 dir('Selenium') {
-                   archiveArtifacts(artifacts: '**/output.xml, **/log.html, **/report.html', allowEmptyArchive: true)            
+                    script {
+                        step([$class: 'RobotPublisher',
+                              outputPath: 'Selenium',
+                              outputFileName: "output.xml",
+                              reportFileName: "report.html",
+                              logFileName: "log.html",
+                              disableArchiveOutput: false,
+                              passThreshold: 100,
+                              unstableThreshold: 95.0,
+                              otherFiles: "*.png"])
+                    }
                 }
-        	 }
-        }
-    }
+          }            
+       }
+  }
 }
