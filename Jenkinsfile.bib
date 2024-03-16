@@ -11,30 +11,45 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dir('Trailrunner') {
+                dir('trailrunner') {
                     bat 'mvn compile'
                 }
             }
         }        
         stage('Test') {
             steps {
-                dir('Trailrunner') {
+                dir('trailrunner') {
                     bat 'mvn test'
                 }
             }
-        }
-        stage('Post Test') {
-            steps {
-            	junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
-                jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
-                }
         }
         stage('Run Robot') {
             steps {
                 dir('Selenium') {
                     bat 'robot InfotivCarRental\\infotivCarRental.robot'
                 }
+            }
+        }        
+        stage('Post Test') {
+            steps {
+            	dir('trailrunner') {
+            	   junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
+                	   jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+                	}
+ 			dir('Selenium') {
+                    script {
+                        step([$class: 'RobotPublisher',
+                              outputPath: 'log',
+                              outputFileName: "output.xml",
+                              reportFileName: "report.html",
+                              logFileName: "log.html",
+                              disableArchiveOutput: false,
+                              passThreshold: 100,
+                              unstableThreshold: 95.0,
+                              otherFiles: "*.png"])                    
+                    }
                 }
-        }
-    }
+            }            
+       }
+   }
 }
