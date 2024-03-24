@@ -25,9 +25,11 @@ pipeline {
         }
         stage('Post Test Trailrunner') {
             steps {
-            	dir('trailrunner') {
-            	   junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
-                	   jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+            	always {
+            		dir('trailrunner') {
+            	   		junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
+                	   		jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+                	   	}
                 	}
             }
         }    
@@ -39,7 +41,7 @@ pipeline {
             }
         }        
         stage('Post Test Robot') {
-            steps {
+            always {
  			dir('Selenium') {
                     script {
                         step([$class: 'RobotPublisher',
@@ -54,6 +56,6 @@ pipeline {
                     }
                 }
             }            
-       }
+        }
    }
 }
