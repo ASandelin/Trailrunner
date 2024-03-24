@@ -23,16 +23,6 @@ pipeline {
                 }
             }
         }
-        stage('Post Test Trailrunner') {
-            steps {
-            	always {
-            		dir('trailrunner') {
-            	   		junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
-                	   		jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
-                	   	}
-                	}
-            }
-        }    
         stage('Run Robot') {
             steps {
                 dir('Selenium') {
@@ -40,8 +30,13 @@ pipeline {
                 }
             }
         }        
-        stage('Post Test Robot') {
-            always {
+        post {
+        	always {
+            steps {
+            	dir('trailrunner') {
+            	   junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
+                	   jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+                	}
  			dir('Selenium') {
                     script {
                         step([$class: 'RobotPublisher',
@@ -50,12 +45,13 @@ pipeline {
                               reportFileName: "report.html",
                               logFileName: "log.html",
                               disableArchiveOutput: false,
-                              passThreshold: 100.0,
-                              unstableThreshold: 0.0,
+                              passThreshold: 100,
+                              unstableThreshold: 95.0,
                               otherFiles: "*.png"])                    
                     }
                 }
-            }            
-        }
+            }  
+          }            
+       }
    }
 }
