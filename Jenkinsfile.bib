@@ -35,13 +35,7 @@ pipeline {
             steps {
                 dir('Selenium') {
                     bat 'robot InfotivCarRental\\infotivCarRental.robot'
-                }
-            }
-        }        
-        stage('Post Test Robot') {
-            steps {
- 			dir('Selenium') {
-                    script {
+                      script {
                         step([$class: 'RobotPublisher',
                               outputPath: 'log',
                               outputFileName: "output.xml",
@@ -51,8 +45,14 @@ pipeline {
                               passThreshold: 0.0,
                               unstableThreshold: 100.0,
                               otherFiles: "*.png"])                    
-                    }
+                      }
+
                 }
+            }
+        }        
+        stage('Post Test Robot') {
+            steps { 
+            	echo " Success?"
             }            
        }
    }
