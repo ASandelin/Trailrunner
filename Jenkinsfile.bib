@@ -33,23 +33,26 @@ pipeline {
     }        
     post {
         always {
-            script {
-                dir('trailrunner') {
+           dir('trailrunner') {
+           	script {
                     junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
                     jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
                 }
-                dir('Selenium') {
-                        step([$class: 'RobotPublisher',
-                              outputPath: 'log',
-                              outputFileName: "output.xml",
-                              reportFileName: "report.html",
-                              logFileName: "log.html",
-                              disableArchiveOutput: false,
-                              passThreshold: 100,
-                              unstableThreshold: 95.0,
-                              otherFiles: "*.png"])                    
+           }
+           dir('Selenium') {
+                script {
+                    step([$class: 'RobotPublisher',
+                      	outputPath: 'log',
+                           outputFileName: "output.xml",
+                           reportFileName: "report.html",
+                           logFileName: "log.html",
+                           disableArchiveOutput: false,
+                           passThreshold: 100,
+                           unstableThreshold: 95.0,
+                           otherFiles: "*.png"])                    
                 }
-            }  
-        }            
-    }
+           }
+              
+       }            
+   }
 }
