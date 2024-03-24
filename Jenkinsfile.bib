@@ -39,8 +39,14 @@ pipeline {
            	
                     junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
                     jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+                    publishHTML([
+    				allowMissing: false, 
+    				alwaysLinkToLastBuild: true, 
+    				includes: '**/target/site/jacoco/*', 
+    				reportDir: '**/target/site/jacoco', 
+    				reportName: 'JaCoCo Code Coverage Report'
+			    ])
                     bat 'echo %CD%'
-                
            }
            dir('Selenium') {
                 script {
