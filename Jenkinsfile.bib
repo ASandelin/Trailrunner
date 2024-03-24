@@ -29,15 +29,16 @@ pipeline {
                     bat 'robot InfotivCarRental\\infotivCarRental.robot'
                 }
             }
-        }        
-        post {
-        	always {
+        }
+    }        
+    post {
+        always {
             steps {
-            	dir('trailrunner') {
-            	   junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
-                	   jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
-                	}
- 			dir('Selenium') {
+                dir('trailrunner') {
+                    junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
+                    jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+                }
+                dir('Selenium') {
                     script {
                         step([$class: 'RobotPublisher',
                               outputPath: 'log',
@@ -51,7 +52,6 @@ pipeline {
                     }
                 }
             }  
-          }            
-       }
-   }
+        }            
+    }
 }
