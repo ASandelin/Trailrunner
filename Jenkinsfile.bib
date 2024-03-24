@@ -37,6 +37,7 @@ pipeline {
            	script {
                     junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
                     jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
+                    bat 'echo %CD%'
                 }
            }
            dir('Selenium') {
@@ -49,7 +50,8 @@ pipeline {
                            disableArchiveOutput: false,
                            passThreshold: 100,
                            unstableThreshold: 95.0,
-                           otherFiles: "*.png"])                    
+                           otherFiles: "*.png"])
+                     bat 'echo %CD%'                    
                 }
            }
               
