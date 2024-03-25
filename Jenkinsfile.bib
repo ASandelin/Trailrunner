@@ -43,7 +43,9 @@ pipeline {
     				allowMissing: false, 
     				alwaysLinkToLastBuild: true, 
     				includes: '**\\target\\site\\jacoco\\*', 
-    				reportDir: '**\\target\\site\\jacoco', 
+    				reportDir: '**\\target\\site\\jacoco',
+    				reportFiles: 'index.html', 
+    				keepAll: true,
     				reportName: 'JaCoCo Code Coverage Report'
 			    ])
                     bat 'echo %CD%'
