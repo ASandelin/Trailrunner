@@ -36,7 +36,7 @@ pipeline {
     post {
         always {
            dir('trailrunner') {
-           	
+           	script {
                     junit '**\\target\\surefire-reports\\*.xml' // Collect JUnit test results
 			    jacoco(execPattern: '**\\target\\jacoco.exec') // Collect JaCoCo code coverage report
 				publishHTML(target: [
@@ -47,6 +47,7 @@ pipeline {
     				reportFiles: 'index.html'  // HTML report file(s) to publish
 				])
                     bat 'echo %CD%'
+               }
            }
            dir('Selenium') {
                 script {
