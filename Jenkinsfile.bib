@@ -42,8 +42,8 @@ pipeline {
                     publishHTML([
     				allowMissing: false, 
     				alwaysLinkToLastBuild: true, 
-    				includes: '**\\target\\site\\jacoco\\*', 
-    				reportDir: 'C:\\Users\\artur\\.jenkins\\workspace\\Artur_Sandelin\\trailrunner\\target\\site\\jacoco',
+    				includes: '\\target\\site\\jacoco\\*', 
+    				reportDir: '\\target\\site\\jacoco',
     				reportFiles: 'index.html', 
     				keepAll: true,
     				reportName: 'JaCoCo Code Coverage Report'
