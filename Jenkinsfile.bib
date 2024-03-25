@@ -37,15 +37,15 @@ pipeline {
         always {
            dir('trailrunner') {
            	
-                    junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
-                    jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
-                    publishHTML(target: [
+                    junit '**\\target\\surefire-reports\\*.xml' // Collect JUnit test results
+			    jacoco(execPattern: '**\\target\\jacoco.exec') // Collect JaCoCo code coverage report
+				publishHTML(target: [
     				allowMissing: false,
     				alwaysLinkToLastBuild: false,
     				keepAll: true,  // Keep all HTML reports
     				reportDir: 'C:\\Users\\artur\\.jenkins\\workspace\\Artur_Sandelin\\trailrunner\\target\\site\\jacoco',  // Directory containing HTML reports
-    			     reportFiles: 'index.html'  // HTML report file(s) to publish
-			    ])
+    				reportFiles: 'index.html'  // HTML report file(s) to publish
+				])
                     bat 'echo %CD%'
            }
            dir('Selenium') {
