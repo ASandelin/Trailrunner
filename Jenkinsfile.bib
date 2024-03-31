@@ -42,7 +42,7 @@ pipeline {
                     publishHTML([
     				allowMissing: false, 
     				alwaysLinkToLastBuild: true, 
-    				includes: '\\target\\site\\jacoco\\*', 
+    				includes: '\\target\\site\\jacoco\\*.*', 
     				reportDir: '\\target\\site\\jacoco',
     				reportFiles: 'index.html', 
     				keepAll: true,
