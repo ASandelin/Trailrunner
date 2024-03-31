@@ -35,6 +35,7 @@ pipeline {
     }        
     post {
         always {
+         cleanWs()
            dir('trailrunner') {
            	
                     junit '\\target\\surefire-reports\\*.xml' // Collect JUnit test results
