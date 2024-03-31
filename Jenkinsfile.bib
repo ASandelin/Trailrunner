@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: 'main', defaultValue: 'master', description: 'Main branch')
-        string(name: 'b1', defaultValue: 'develop', description: 'Branch b1')
-    }
     triggers {
         pollSCM('H * * * *') 
     }
@@ -20,6 +16,8 @@ pipeline {
             steps {
                 dir('trailrunner') {
                     bat 'mvn test'
+                    junit '\\target\\surefire-reports\\*.xml' // Collect JUnit test results
+                    jacoco(execPattern: '\\target\\*.exec') // Collect JaCoCo code coverage report
                 }
             }
         }
@@ -35,21 +33,6 @@ pipeline {
     }        
     post {
         always {
-           dir('trailrunner') {
-           	
-                    junit '\\target\\surefire-reports\\*.xml' // Collect JUnit test results
-                    jacoco(execPattern: '\\target\\*.exec') // Collect JaCoCo code coverage report
-                    publishHTML([
-    				allowMissing: false, 
-    				alwaysLinkToLastBuild: true, 
-    				includes: '\\target\\site\\jacoco\\*.*', 
-    				reportDir: '\\target\\site\\jacoco',
-    				reportFiles: 'index.html', 
-    				keepAll: true,
-    				reportName: 'JaCoCo Code Coverage Report'
-			    ])
-                    bat 'echo %CD%'
-           }
            dir('Selenium') {
                 script {
                     step([$class: 'RobotPublisher',
