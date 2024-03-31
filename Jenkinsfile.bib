@@ -26,30 +26,45 @@ pipeline {
         stage('Run Robot') {
             steps {
                 dir('Selenium') {
-                    bat 'robot InfotivCarRental\\infotivCarRental.robot'
+           
+                    bat 'robot --outputdir log InfotivCarRental\\infotivCarRental.robot'
+
                 }
             }
-        }        
-        stage('Post Test') {
-            steps {
-            	dir('trailrunner') {
-            	   junit '**/target/surefire-reports/*.xml' // Collect JUnit test results
-                	   jacoco(execPattern: '**/target/jacoco.exec') // Collect JaCoCo code coverage report
-                	}
- 			dir('Selenium') {
-                    script {
-                        step([$class: 'RobotPublisher',
-                              outputPath: 'log',
-                              outputFileName: "output.xml",
-                              reportFileName: "report.html",
-                              logFileName: "log.html",
-                              disableArchiveOutput: false,
-                              passThreshold: 100,
-                              unstableThreshold: 95.0,
-                              otherFiles: "*.png"])                    
-                    }
+        }
+    }        
+    post {
+        always {
+           dir('trailrunner') {
+           	
+                    junit '\\target\\surefire-reports\\*.xml' // Collect JUnit test results
+                    jacoco(execPattern: '\\target\\*.exec') // Collect JaCoCo code coverage report
+                    publishHTML([
+    				allowMissing: false, 
+    				alwaysLinkToLastBuild: true, 
+    				includes: '\\target\\site\\jacoco\\*.*', 
+    				reportDir: '\\target\\site\\jacoco',
+    				reportFiles: 'index.html', 
+    				keepAll: true,
+    				reportName: 'JaCoCo Code Coverage Report'
+			    ])
+                    bat 'echo %CD%'
+           }
+           dir('Selenium') {
+                script {
+                    step([$class: 'RobotPublisher',
+                      	outputPath: 'log',
+                           outputFileName: "output.xml",
+                           reportFileName: "report.html",
+                           logFileName: "log.html",
+                           disableArchiveOutput: false,
+                           passThreshold: 100,
+                           unstableThreshold: 95.0,
+                           otherFiles: "*.png"])
+                     bat 'echo %CD%'                    
                 }
-            }            
-       }
+           }
+              
+       }            
    }
 }
