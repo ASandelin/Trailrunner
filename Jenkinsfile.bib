@@ -20,6 +20,8 @@ pipeline {
             steps {
                 dir('trailrunner') {
                     bat 'mvn test'
+                    junit '\\target\\surefire-reports\\*.xml' // Collect JUnit test results
+                    jacoco(execPattern: '\\target\\*.exec') // Collect JaCoCo code coverage report
                 }
             }
         }
@@ -35,11 +37,6 @@ pipeline {
     }        
     post {
         always {
-           dir('trailrunner') {
-           	
-                    junit '\\target\\surefire-reports\\*.xml' // Collect JUnit test results
-                    jacoco(execPattern: '\\target\\*.exec') // Collect JaCoCo code coverage report
-                     }
            dir('Selenium') {
                 script {
                     step([$class: 'RobotPublisher',
