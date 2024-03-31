@@ -6,7 +6,7 @@ BDD-Rent a car
     [Documentation]  Test navigation flow of renting a car and verify booking
     [Tags]  VG_test
 
-    Given User navigate to rental page and logs in with valid credentials   hamid
+    Given User navigate to rental page and logs in with valid credentials   &{user2}
     When User chooses rental date and rental car
     Then The booking should be succesful
 
